@@ -1,4 +1,4 @@
-# test_app
+# coin lsit app
 
 A new Flutter project.
 
