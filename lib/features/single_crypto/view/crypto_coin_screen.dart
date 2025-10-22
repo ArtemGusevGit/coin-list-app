@@ -60,20 +60,38 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
 
             if (state is SingleCoinLoaded) {
               final coin = state.coin;
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('${coin.name} — ${coin.displayPrice}',
-                        style: const TextStyle(fontSize: 22)),
-                    const SizedBox(height: 8),
-                    Text('High 24h: ${coin.high24h}'),
-                    Text('Low 24h: ${coin.low24h}'),
-                    Text('Change 24h: ${coin.changePct24h}%'),
-                    Text('Market: ${coin.lastMarket}'),
-                  ],
+
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context
+                      .read<SingleCoinBloc>()
+                      .add(LoadSingleCoin(coinSymbol: coinName!));
+                },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height - kToolbarHeight,
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('${coin.name} — ${coin.displayPrice}',
+                              style: const TextStyle(fontSize: 22)),
+                          const SizedBox(height: 8),
+                          Text('High 24h: ${coin.high24h}'),
+                          Text('Low 24h: ${coin.low24h}'),
+                          Text('Change 24h: ${coin.changePct24h}%'),
+                          Text('Market: ${coin.lastMarket}'),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               );
+
+
             }
 
             if (state is SingleCoinLoadingFailure) {
