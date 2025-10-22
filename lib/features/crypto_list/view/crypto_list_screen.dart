@@ -34,26 +34,41 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
       body: BlocBuilder<CryptoListBloc, CryptoListState>(
         bloc: _cryptoListBlock,
         builder: (context, state) {
-          if(state is CryptoListLoaded) {
-            return ListView.separated(
-              itemCount: state.coinList.length,
-              separatorBuilder: (context, idx) => Divider(),
-              itemBuilder: (context, idx) {
-                final coin = state.coinList[idx];
-                final coinName = coin.name;
-                final coinValue = coin.priceInUsd;
-                final coinImg = coin.img;
-                return CryptoCoinTile(coinName: coinName, coinValue:coinValue, coinImg: coinImg);
+          if (state is CryptoListLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is CryptoListLoaded) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                _cryptoListBlock.add(LoadCryptoList());
               },
+              child: ListView.separated(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: state.coinList.length,
+                separatorBuilder: (context, idx) => const Divider(),
+                itemBuilder: (context, idx) {
+                  final coin = state.coinList[idx];
+                  return CryptoCoinTile(
+                    coinName: coin.name,
+                    coinValue: coin.priceInUsd,
+                    coinImg: coin.img,
+                  );
+                },
+              ),
             );
           }
 
-          if(state is CryptoListLoadingFailure) {
-            return Center(child: Text(state.exception?.toString() ?? 'Exception'));
+          if (state is CryptoListLoadingFailure) {
+            return Center(
+              child: Text(state.exception?.toString() ?? 'Ошибка загрузки'),
+            );
           }
-          return Center(child: CircularProgressIndicator());
-        }
-      )
+
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
+
     );
   }
 }
