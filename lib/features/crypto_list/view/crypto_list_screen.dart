@@ -43,7 +43,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
                 final coinName = coin.name;
                 final coinValue = coin.priceInUsd;
                 final coinImg = coin.img;
-                return CryptoCoinTile(coinName: coinName, coinValue:coinValue, coinImg: coinImg, id:idx);
+                return CryptoCoinTile(coinName: coinName, coinValue:coinValue, coinImg: coinImg);
               },
             );
           }
