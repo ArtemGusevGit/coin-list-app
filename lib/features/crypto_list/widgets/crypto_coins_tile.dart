@@ -17,7 +17,7 @@ class CryptoCoinTile extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return ListTile(
-      leading: Image.network(coinImg),
+      leading: Image.network(coinImg, width: 50, height: 50,),
       title: Text(coinName, style: textTheme.bodyMedium),
       subtitle: Text('$coinValue\$', style: textTheme.bodySmall),
       trailing: Icon(Icons.arrow_forward_ios),
