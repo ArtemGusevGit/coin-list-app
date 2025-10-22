@@ -50,6 +50,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
       value: _coinBloc!,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(coinName!),
         ),
         body: BlocBuilder<SingleCoinBloc, SingleCoinState>(
