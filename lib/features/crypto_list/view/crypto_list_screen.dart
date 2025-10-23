@@ -7,9 +7,8 @@ import '../widgets/crypto_coin_skeleton.dart';
 import '../widgets/widgets.dart';
 
 class CryptoListScreen extends StatefulWidget {
-  const CryptoListScreen({super.key, required this.title});
+  const CryptoListScreen({super.key});
 
-  final String title;
 
   @override
   State<CryptoListScreen> createState() => _CryptoListScreenState();
@@ -30,7 +29,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text('Crypto list app'),
       ),
       body: BlocBuilder<CryptoListBloc, CryptoListState>(
         bloc: _cryptoListBlock,
