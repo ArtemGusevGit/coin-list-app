@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../repositories/single_coin/abstract_single_coin_repository.dart';
 import '../block/single_crypto_bloc.dart';
+import '../widgets/crypto_coin_skeleton.dart';
 
 class CryptoCoinScreen extends StatefulWidget {
   const CryptoCoinScreen({super.key});
@@ -63,7 +64,11 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
         body: BlocBuilder<SingleCoinBloc, SingleCoinState>(
           builder: (context, state) {
             if (state is SingleCoinLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return ListView.separated(
+                itemCount: 7,
+                separatorBuilder: (_, __) => const Divider(),
+                itemBuilder: (context, index) => const CryptoCoinSkeleton(),
+              );
             }
 
             if (state is SingleCoinLoaded) {
