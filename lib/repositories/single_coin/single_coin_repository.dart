@@ -24,6 +24,7 @@ class SingleCoinRepository implements AbstractSingleCoinRepository {
       high24h: display['HIGH24HOUR'],        // 111700.1
       low24h: display['LOW24HOUR'],          // 107466.8
       changePct24h: display['CHANGEPCT24HOUR'], // 1.92
+      change24h: display['CHANGE24HOUR'], // 1.92
       displayPrice: display['PRICE'],               // "$ 111,033.7"
       lastMarket: display['LASTMARKET'],            // "Kraken"
     );

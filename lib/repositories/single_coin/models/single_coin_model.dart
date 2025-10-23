@@ -5,6 +5,7 @@ class SingleCoin {
     required this.high24h,
     required this.low24h,
     required this.changePct24h,
+    required this.change24h,
     required this.displayPrice,
     required this.lastMarket,
   });
@@ -14,6 +15,7 @@ class SingleCoin {
   final String? high24h;
   final String? low24h;
   final String? changePct24h;
+  final String? change24h;
   final String? displayPrice;
   final String? lastMarket;
 }
