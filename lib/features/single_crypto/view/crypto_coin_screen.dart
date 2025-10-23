@@ -70,18 +70,31 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
               final coin = state.coin;
               final coinInfo = coin.toDisplayList();
 
-              return ListView.separated(
-                itemCount: coinInfo.length,
-                separatorBuilder: (_, __) => const Divider(),
-                itemBuilder: (context, index) {
-                  final item = coinInfo[index];
-                  return ListTile(
-                    title: Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    trailing: Text(item['value'] ?? '', style: const TextStyle(fontSize: 16)),
-                  );
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<SingleCoinBloc>().add(LoadSingleCoin(coinSymbol: coinName!));
                 },
+                child: ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: coinInfo.length,
+                  separatorBuilder: (_, __) => const Divider(),
+                  itemBuilder: (context, index) {
+                    final item = coinInfo[index];
+                    return ListTile(
+                      title: Text(
+                        item['title']!,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      trailing: Text(
+                        item['value'] ?? '',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    );
+                  },
+                ),
               );
             }
+
 
             if (state is SingleCoinLoadingFailure) {
               return Center(child: Text('Error: ${state.exception}'));
