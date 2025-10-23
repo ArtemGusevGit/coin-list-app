@@ -65,12 +65,9 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
               final coinInfo = [
                 {'title': 'Coin', 'value': coin.name},
                 {'title': 'Price', 'value': coin.displayPrice},
-                {'title': 'High 24h', 'value': coin.high24h.toString()},
-                {'title': 'Low 24h', 'value': coin.low24h.toString()},
-                {
-                  'title': 'Change 24h',
-                  'value': coin.changePct24h
-                },
+                {'title': 'High 24h', 'value': coin.high24h},
+                {'title': 'Low 24h', 'value': coin.low24h},
+                {'title': 'Change 24h', 'value':'${coin.changePct24h}%'},
                 {'title': 'Market', 'value': coin.lastMarket},
               ];
 

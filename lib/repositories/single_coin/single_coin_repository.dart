@@ -21,9 +21,9 @@ class SingleCoinRepository implements AbstractSingleCoinRepository {
     final coin = SingleCoin(
       name: raw['FROMSYMBOL'],                      // BTC
       priceInUsd: raw['PRICE'].toString(),          // 111033.7
-      high24h: raw['HIGH24HOUR'].toString(),        // 111700.1
-      low24h: raw['LOW24HOUR'].toString(),          // 107466.8
-      changePct24h: (raw['CHANGEPCT24HOUR'] as num).toDouble(), // 1.92
+      high24h: display['HIGH24HOUR'].toString(),        // 111700.1
+      low24h: display['LOW24HOUR'].toString(),          // 107466.8
+      changePct24h: display['CHANGEPCT24HOUR'], // 1.92
       displayPrice: display['PRICE'],               // "$ 111,033.7"
       lastMarket: display['LASTMARKET'],            // "Kraken"
     );

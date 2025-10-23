@@ -13,7 +13,7 @@ class SingleCoin {
   final String priceInUsd;
   final String? high24h;
   final String? low24h;
-  final double? changePct24h;
+  final String? changePct24h;
   final String? displayPrice;
   final String? lastMarket;
 }
