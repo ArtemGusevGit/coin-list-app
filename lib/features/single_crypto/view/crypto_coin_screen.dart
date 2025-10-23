@@ -62,38 +62,43 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
             if (state is SingleCoinLoaded) {
               final coin = state.coin;
 
+              final coinInfo = [
+                {'title': 'Coin', 'value': coin.name},
+                {'title': 'Price', 'value': coin.displayPrice},
+                {'title': 'High 24h', 'value': coin.high24h.toString()},
+                {'title': 'Low 24h', 'value': coin.low24h.toString()},
+                {
+                  'title': 'Change 24h',
+                  'value': coin.changePct24h
+                },
+                {'title': 'Market', 'value': coin.lastMarket},
+              ];
+
               return RefreshIndicator(
                 onRefresh: () async {
-                  context
-                      .read<SingleCoinBloc>()
-                      .add(LoadSingleCoin(coinSymbol: coinName!));
+                  context.read<SingleCoinBloc>().add(LoadSingleCoin(coinSymbol: coinName!));
                 },
-                child: SingleChildScrollView(
+                child: ListView.separated(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height - kToolbarHeight,
-                    ),
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('${coin.name} — ${coin.displayPrice}',
-                              style: const TextStyle(fontSize: 22)),
-                          const SizedBox(height: 8),
-                          Text('High 24h: ${coin.high24h}'),
-                          Text('Low 24h: ${coin.low24h}'),
-                          Text('Change 24h: ${coin.changePct24h}%'),
-                          Text('Market: ${coin.lastMarket}'),
-                        ],
+                  itemCount: coinInfo.length,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemBuilder: (context, index) {
+                    final item = coinInfo[index];
+                    return ListTile(
+                      title: Text(
+                        item['title'] as String,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ),
+                      trailing: Text(
+                        item['value'].toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    );
+                  },
                 ),
               );
-
-
             }
+
 
             if (state is SingleCoinLoadingFailure) {
               return Center(child: Text('Error: ${state.exception}'));
