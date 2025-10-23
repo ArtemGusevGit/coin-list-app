@@ -18,4 +18,16 @@ class SingleCoin {
   final String? change24h;
   final String? displayPrice;
   final String? lastMarket;
+
+  List<Map<String, String?>> toDisplayList() {
+    return [
+      {'title': 'Coin', 'value': name},
+      {'title': 'Price', 'value': displayPrice},
+      {'title': 'High 24h', 'value': high24h},
+      {'title': 'Low 24h', 'value': low24h},
+      {'title': 'Change 24h', 'value': change24h},
+      {'title': 'Change 24h(%)', 'value': changePct24h != null ? '$changePct24h%' : null},
+      {'title': 'Market', 'value': lastMarket},
+    ];
+  }
 }

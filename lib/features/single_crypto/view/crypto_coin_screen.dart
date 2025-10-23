@@ -68,42 +68,20 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
 
             if (state is SingleCoinLoaded) {
               final coin = state.coin;
+              final coinInfo = coin.toDisplayList();
 
-              final coinInfo = [
-                {'title': 'Coin', 'value': coin.name},
-                {'title': 'Price', 'value': coin.displayPrice},
-                {'title': 'High 24h', 'value': coin.high24h},
-                {'title': 'Low 24h', 'value': coin.low24h},
-                {'title': 'Change 24h', 'value': coin.change24h},
-                {'title': 'Change 24h(%)', 'value':'${coin.changePct24h}%'},
-                {'title': 'Market', 'value': coin.lastMarket},
-              ];
-
-              return RefreshIndicator(
-                onRefresh: () async {
-                  context.read<SingleCoinBloc>().add(LoadSingleCoin(coinSymbol: coinName!));
+              return ListView.separated(
+                itemCount: coinInfo.length,
+                separatorBuilder: (_, __) => const Divider(),
+                itemBuilder: (context, index) {
+                  final item = coinInfo[index];
+                  return ListTile(
+                    title: Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    trailing: Text(item['value'] ?? '', style: const TextStyle(fontSize: 16)),
+                  );
                 },
-                child: ListView.separated(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: coinInfo.length,
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemBuilder: (context, index) {
-                    final item = coinInfo[index];
-                    return ListTile(
-                      title: Text(
-                        item['title'] as String,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      trailing: Text(
-                        item['value'].toString(),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    );
-                  },
-                ),
               );
             }
-
 
             if (state is SingleCoinLoadingFailure) {
               return Center(child: Text('Error: ${state.exception}'));
