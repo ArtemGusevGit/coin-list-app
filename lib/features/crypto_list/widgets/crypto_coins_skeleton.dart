@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CryptoCoinSkeleton extends StatelessWidget {
-  const CryptoCoinSkeleton({super.key});
+class CryptoCoinsSkeleton extends StatelessWidget {
+  const CryptoCoinsSkeleton({super.key});
 
   @override
   Widget build(BuildContext context) {
