@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:test_app/repositories/crypto_coins/crypto_coins_repository.dart';
 
 import '../features/crypto_list/block/crypto_list_bloc.dart';
 import '../features/crypto_list/view/view.dart';
