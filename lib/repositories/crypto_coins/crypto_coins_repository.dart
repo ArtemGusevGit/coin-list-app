@@ -1,24 +1,27 @@
 import 'package:dio/dio.dart';
+import 'package:test_app/repositories/coingecko_ids.dart';
 import 'package:test_app/repositories/crypto_coins/abstract_coins_repository.dart';
 import 'models/crypto_coin_model.dart';
 
 class CryptoCoinsRepository implements AbstractCoinsRepository {
   @override
   Future<List<CryptoCoin>> getCoinsList() async {
-    final response = await Dio().get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,DOGE,BNB,TON,SOL&tsyms=USD');
-    final data = response.data as Map<String, dynamic>;
-    final dataRaw = data['RAW'] as Map<String, dynamic>;
-    final cryptoCoinsList = dataRaw.entries
-        .map((el) {
-          final usdData = (el.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
-          final price = usdData['PRICE'];
-          final imageUrl = usdData['IMAGEURL'];
-          return CryptoCoin(
-              name: el.key,
-              priceInUsd: price,
-              img: 'https://cryptocompare.com$imageUrl'
-          );
-        }).toList();
+    final response = await Dio().get(
+      'https://api.coingecko.com/api/v3/coins/markets',
+      queryParameters: {
+        'vs_currency': 'usd',
+        'ids': coinGeckoIds.values.join(','),
+      },
+    );
+    final data = response.data as List<dynamic>;
+    final cryptoCoinsList = data.map((el) {
+      final coin = el as Map<String, dynamic>;
+      return CryptoCoin(
+        name: (coin['symbol'] as String).toUpperCase(),
+        priceInUsd: (coin['current_price'] as num).toDouble(),
+        img: coin['image'] as String,
+      );
+    }).toList();
     return cryptoCoinsList;
   }
 }
